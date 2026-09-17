@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <title>Jobline - Job Detail Drawer</title>
 <link rel="stylesheet" href="fluent2-alignment.css">
-<link rel="stylesheet" href="persona.css">
+<link rel="stylesheet" href="persona.css?v=20">
 <link rel="stylesheet" href="operations-overview.css">
 <link rel="stylesheet" href="accessibility.css">
 <link rel="stylesheet" href="typography-consistency.css">
-<link rel="stylesheet" href="app-shell.css?v=4">
+<link rel="stylesheet" href="app-shell.css?v=11">
 <style>
 :root{
   --brand:#0F6CBD;--brand-hover:#115EA3;--brand-pressed:#0B4F8A;
@@ -327,7 +327,7 @@ button{font-family:var(--font);cursor:pointer;}
   if (selectedJob) {
     const record = { ...jobs[customer], ...(readUpdates()[jobKey] || {}) };
     const priorityColor = record.priority === 'High' ? '#C4314B' : record.priority === 'Medium' ? '#FFB900' : '#616161';
-    const stageColors = { 'New':['var(--brand-tint-20)','var(--brand)'], 'Scheduled':['var(--brand-tint-20)','var(--brand)'], 'In Progress':['var(--warning-bg)','var(--warning-fg)'], 'Blocked':['var(--danger-bg)','var(--danger-fg)'], 'Done':['var(--success-bg)','var(--success-fg)'], 'Unassigned':['var(--neutral-bg)','var(--neutral-fg)'] };
+        const stageColors = { 'New':['#F2EAF7','#5C2D91'], 'Scheduled':['var(--brand-tint-20)','var(--brand)'], 'In Progress':['var(--warning-bg)','var(--warning-fg)'], 'Blocked':['var(--danger-bg)','var(--danger-fg)'], 'Done':['var(--success-bg)','var(--success-fg)'], 'Unassigned':['var(--neutral-bg)','var(--neutral-fg)'] };
     const colors = stageColors[record.stage] || stageColors.Unassigned;
     const profile = techProfiles[record.technician];
     const tech = profile ? `<div class="avatar" style="width:22px;height:22px;font-size:10px;background:${profile.bg};color:${profile.color};">${profile.initials}</div><span style="font-size:13px;color:var(--fg2);">${escapeHtml(record.technician)}</span>` : '<div style="width:22px;height:22px;border-radius:50%;border:1.5px dashed var(--stroke1);"></div><span style="font-size:13px;color:var(--danger-fg);font-weight:600;">Unassigned</span>';
@@ -371,7 +371,7 @@ button{font-family:var(--font);cursor:pointer;}
       'Blocked': ['var(--danger-bg)', 'var(--danger-fg)'],
       'Done': ['var(--success-bg)', 'var(--success-fg)'],
       'Unassigned': ['var(--neutral-bg)', 'var(--neutral-fg)']
-      ,'New': ['var(--brand-tint-20)', 'var(--brand)']
+          ,'New': ['#F2EAF7', '#5C2D91']
     };
     const colors = styles[stage] || styles['Unassigned'];
     badge.textContent = stage;
@@ -483,7 +483,7 @@ button{font-family:var(--font);cursor:pointer;}
       const isCurrent = selectedJob ? row.dataset.jobKey === jobKey : row.children[1]?.textContent.trim() === customer;
       row.style.background = isCurrent ? 'var(--brand-tint-10)' : '';
       if (!isCurrent) return;
-      const rowStageColors = { 'New':['var(--brand-tint-20)','var(--brand)'], 'Scheduled':['var(--brand-tint-20)','var(--brand)'], 'In Progress':['var(--warning-bg)','var(--warning-fg)'], 'Blocked':['var(--danger-bg)','var(--danger-fg)'], 'Done':['var(--success-bg)','var(--success-fg)'] };
+      const rowStageColors = { 'New':['#F2EAF7','#5C2D91'], 'Scheduled':['var(--brand-tint-20)','var(--brand)'], 'In Progress':['var(--warning-bg)','var(--warning-fg)'], 'Blocked':['var(--danger-bg)','var(--danger-fg)'], 'Done':['var(--success-bg)','var(--success-fg)'] };
       const rowStageColor = rowStageColors[record.stage] || rowStageColors.New;
       row.children[2].textContent = record.description || 'No description';
       row.children[3].textContent = record.type || 'New Job';
@@ -576,8 +576,8 @@ button{font-family:var(--font);cursor:pointer;}
   renderActivity();
 })();
 </script>
-<script src="persona.js?v=8"></script>
+<script src="persona.js?v=14"></script>
 <script src="accessibility.js?v=1"></script>
-<script src="app-shell.js?v=4"></script>
+<script src="app-shell.js?v=6"></script>
 </body>
 </html>

@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>Jobline - New Job</title>
 <link rel="stylesheet" href="fluent2-alignment.css">
-<link rel="stylesheet" href="persona.css">
+<link rel="stylesheet" href="persona.css?v=20">
 <link rel="stylesheet" href="accessibility.css">
 <link rel="stylesheet" href="typography-consistency.css">
-<link rel="stylesheet" href="app-shell.css?v=4">
+<link rel="stylesheet" href="app-shell.css?v=11">
 <style>
 :root{
   --brand:#0F6CBD;--brand-hover:#115EA3;
@@ -214,12 +214,12 @@ body.modal-mode>div{min-height:auto !important;background:#fff !important;}
     <section class="modal-section"><h3>Customer</h3><div class="modal-grid">
       <label class="modal-field full">Customer<input name="customer" id="modalCustomer" required autocomplete="off" placeholder="Enter customer or business name"></label>
       <label class="modal-field">Contact person<input name="contactName" id="modalContact" required placeholder="Enter contact name"></label>
-      <label class="modal-field">Phone<input name="phone" id="modalPhone" type="tel" required placeholder="(312) 555-0100"></label>
-      <label class="modal-field full">Email<input name="email" id="modalEmail" type="email" required placeholder="name@example.com"></label>
+      <label class="modal-field">Phone<input name="phone" id="modalPhone" type="tel" required placeholder="Enter phone number"></label>
+      <label class="modal-field full">Email<input name="email" id="modalEmail" type="email" required placeholder="Enter email address"></label>
       <label class="modal-field full">Street address<input name="street" id="modalStreet" required placeholder="Enter street address"></label>
       <label class="modal-field">City<input name="city" id="modalCity" required placeholder="Enter city"></label>
-      <label class="modal-field">State<input name="state" id="modalState" required maxlength="2" placeholder="IL"></label>
-      <label class="modal-field">ZIP code<input name="zip" id="modalZip" required inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="60443"></label>
+      <label class="modal-field">State<input name="state" id="modalState" required maxlength="2" placeholder="Enter state"></label>
+      <label class="modal-field">ZIP code<input name="zip" id="modalZip" required inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="Enter ZIP code"></label>
       <label class="modal-field">Created date &amp; time<input name="createdLocal" id="modalCreated" type="datetime-local" required></label>
     </div></section>
     <section class="modal-section"><h3>Job details</h3><div class="modal-grid">
@@ -231,7 +231,7 @@ body.modal-mode>div{min-height:auto !important;background:#fff !important;}
       <label class="modal-field full">Description<textarea name="description" required placeholder="Describe the requested work"></textarea></label>
     </div></section>
     <section class="modal-section"><h3>Pricing</h3><div class="modal-grid">
-      <label class="modal-field">Job fee<input name="fee" type="number" min="0" required placeholder="$0"></label>
+      <label class="modal-field">Job fee<input name="fee" type="number" min="0" required placeholder="Enter job fee"></label>
       <label class="modal-field">Estimated duration<select name="duration" required><option value="">Select duration</option><option>1 hour</option><option>2 hours</option><option>Half day</option><option>Full day</option></select></label>
     </div></section>
     <div class="modal-actions"><button class="ghost-btn" id="modalCancel" type="button">Cancel</button><button class="modal-primary" id="modalCreateButton" type="submit">Create Job</button></div>
@@ -470,8 +470,8 @@ body.modal-mode>div{min-height:auto !important;background:#fff !important;}
   });
 })();
 </script>
-<script src="persona.js?v=8"></script>
+<script src="persona.js?v=14"></script>
 <script src="accessibility.js?v=1"></script>
-<script src="app-shell.js?v=4"></script>
+<script src="app-shell.js?v=6"></script>
 </body>
 </html>

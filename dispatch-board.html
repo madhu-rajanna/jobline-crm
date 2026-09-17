@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <title>Jobline - Dispatch Board</title>
 <link rel="stylesheet" href="fluent2-alignment.css">
-<link rel="stylesheet" href="persona.css">
+<link rel="stylesheet" href="persona.css?v=20">
 <link rel="stylesheet" href="operations-overview.css">
 <link rel="stylesheet" href="accessibility.css">
 <link rel="stylesheet" href="typography-consistency.css">
-<link rel="stylesheet" href="app-shell.css?v=4">
+<link rel="stylesheet" href="app-shell.css?v=11">
 <style>
 :root{
   --brand:#0F6CBD;--brand-hover:#115EA3;
@@ -70,8 +70,13 @@ button{font-family:var(--font);cursor:pointer;}
 .card[draggable="true"]:active{cursor:grabbing;}
 .move-toast{position:fixed;right:24px;bottom:24px;z-index:20;background:var(--fg1);color:#fff;padding:11px 14px;border-radius:8px;box-shadow:var(--shadow16);font-size:13px;display:none;}
 .move-toast.show{display:block;}
+.new-job-scrim{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:40;display:none;padding:24px;align-items:center;justify-content:center;}
+.new-job-scrim.open{display:flex;}
+.new-job-modal{width:min(820px,100%);height:min(88dvh,900px);background:var(--nbg1);border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column;}
+.new-job-modal-head{height:52px;padding:0 16px 0 20px;border-bottom:1px solid var(--stroke2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.new-job-frame{width:100%;height:100%;border:0;background:#fff;}
 @media (max-width:1180px){ main{padding:20px !important;} .board{overflow-x:auto;grid-auto-columns:220px;grid-template-columns:repeat(5,220px);} }
-@media (max-width:760px){ .rail{width:56px !important;} }
+@media (max-width:760px){ .rail{width:56px !important;} .new-job-scrim{padding:0;}.new-job-modal{width:100%;height:100dvh;border-radius:0;} }
 </style>
 </head>
 <body>
@@ -94,7 +99,7 @@ button{font-family:var(--font);cursor:pointer;}
         <h1 style="margin:0;font-size:24px;font-weight:600;color:var(--fg1);">Dispatch Board</h1>
         <p style="margin:4px 0 0;font-size:14px;color:var(--fg3);">Drag a job to reassign or change its status</p>
       </div>
-      <a class="ghost-btn dispatch-new-job" href="new-job-form.html"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>New Job</a>
+      <button class="ghost-btn dispatch-new-job" id="openNewJobModal" type="button"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>New Job</button>
     </div>
 
     <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -229,6 +234,12 @@ button{font-family:var(--font);cursor:pointer;}
       </div>
     </div>
   </main>
+</div>
+<div class="new-job-scrim" id="newJobScrim" role="dialog" aria-modal="true" aria-labelledby="newJobModalTitle">
+  <div class="new-job-modal">
+    <div class="new-job-modal-head"><strong id="newJobModalTitle">Create New Job</strong><button class="icon-btn" id="closeNewJobModal" type="button" aria-label="Close new job form"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M4.09 4.09a.75.75 0 0 1 1.06 0L10 8.94l4.85-4.85a.75.75 0 1 1 1.06 1.06L11.06 10l4.85 4.85a.75.75 0 1 1-1.06 1.06L10 11.06l-4.85 4.85a.75.75 0 1 1-1.06-1.06L8.94 10 4.09 5.15a.75.75 0 0 1 0-1.06Z"/></svg></button></div>
+    <iframe class="new-job-frame" id="newJobFrame" title="New job form" data-src="new-job-form.html?modal=1&amp;v=2"></iframe>
+  </div>
 </div>
 <div class="move-toast" id="dispatchToast" role="status"></div>
 <script>
@@ -374,11 +385,57 @@ button{font-family:var(--font);cursor:pointer;}
     });
   }
   renderBoard();
+
+  const newJobScrim = document.getElementById('newJobScrim');
+  const newJobFrame = document.getElementById('newJobFrame');
+  function openNewJobModal() {
+    newJobFrame.setAttribute('src', `${newJobFrame.dataset.src}&fresh=${Date.now()}`);
+    newJobScrim.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('closeNewJobModal').focus();
+  }
+  function closeNewJobModal() {
+    newJobScrim.classList.remove('open');
+    newJobFrame.removeAttribute('src');
+    document.body.style.overflow = '';
+    document.getElementById('openNewJobModal').focus();
+  }
+  document.getElementById('openNewJobModal').addEventListener('click', openNewJobModal);
+  document.getElementById('closeNewJobModal').addEventListener('click', closeNewJobModal);
+  newJobScrim.addEventListener('click', event => { if (event.target === newJobScrim) closeNewJobModal(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && newJobScrim.classList.contains('open')) closeNewJobModal();
+  });
+  window.addEventListener('message', event => {
+    if (event.data !== 'jobline-close-new-job' && event.data?.type !== 'jobline-create-job') return;
+    if (event.data?.type !== 'jobline-create-job') {
+      closeNewJobModal();
+      return;
+    }
+    const jobs = readCreatedJobs().map(({ jobKey, ...job }) => job);
+    jobs.unshift(event.data.job);
+    localStorage.setItem('jobline-created-jobs', JSON.stringify(jobs));
+    let activity = [];
+    try { activity = JSON.parse(localStorage.getItem('jobline-job-activity') || '[]'); } catch {}
+    activity.unshift({ id:`activity-${Date.now()}`, jobKey:event.data.job.id, customer:event.data.job.customer, text:'Job created.', author:'System', createdAt:new Date().toISOString() });
+    localStorage.setItem('jobline-job-activity', JSON.stringify(activity));
+    if (event.data.job.aiAssisted) {
+      const approvedAt = event.data.job.aiApprovedAt || new Date().toISOString();
+      const auditId = `ai-audit-create-${Date.now()}`;
+      let audit = [];
+      try { audit = JSON.parse(localStorage.getItem('jobline-ai-audit') || '[]'); } catch {}
+      audit.unshift({id:auditId,jobKey:event.data.job.id,customer:event.data.job.customer,kind:'create',action:'Create job from request',decision:'Approved',approvedBy:event.data.job.aiApprovedBy || 'Manager / Dispatcher',approvedAt,source:'Customer request parsed by simulated AI — human reviewed',before:null,after:{stage:event.data.job.stage,technician:event.data.job.technician,promisedDate:event.data.job.promised,promisedTime:event.data.job.time,description:event.data.job.description},changes:[{field:'Job record',before:'Not created',after:`${event.data.job.type} · ${event.data.job.stage}`}],review:event.data.job.aiReviewMeta});
+      localStorage.setItem('jobline-ai-audit',JSON.stringify(audit.slice(0,100)));
+      sessionStorage.setItem('jobline-ai-confirmation',JSON.stringify({title:'AI-assisted job approved',message:`${event.data.job.customer} was created after human review. The decision is recorded in AI activity.`,auditId,undoAllowed:false}));
+    }
+    sessionStorage.setItem('jobline-created-message', `New job created for ${event.data.job.customer}`);
+    location.reload();
+  });
 })();
 </script>
-<script src="persona.js?v=8"></script>
-<script src="operations-overview.js?v=1"></script>
+<script src="persona.js?v=14"></script>
+<script src="operations-overview.js?v=3"></script>
 <script src="accessibility.js?v=1"></script>
-<script src="app-shell.js?v=4"></script>
+<script src="app-shell.js?v=6"></script>
 </body>
 </html>

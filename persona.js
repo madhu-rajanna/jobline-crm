@@ -46,14 +46,17 @@
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-modal', 'true');
       overlay.setAttribute('aria-labelledby', 'personaTitle');
-      overlay.innerHTML = `<div class="persona-card"><div class="persona-brand"><div class="persona-logo">J</div><div><h1 id="personaTitle">Welcome to Jobline</h1><p style="margin:2px 0 0;color:#616161">Choose a role to start the demo</p></div></div><div class="persona-options"><button class="persona-option" type="button" data-persona="manager"><strong>Manager / Dispatcher</strong><span>Manage all jobs, assignments, technicians, dispatch, and customer history.</span></button><button class="persona-option" type="button" data-persona="technician"><strong>Technician</strong><span>View assigned work, update progress, add notes, and review relevant job information.</span></button></div><div class="persona-tech-select" id="personaTechSelect" hidden><label for="personaTechnician">Demo technician</label><select id="personaTechnician">${technicians.map(name => `<option${name === technician ? ' selected' : ''}>${escapeHtml(name)}</option>`).join('')}</select></div><div class="persona-actions"><span class="persona-hint">Demo-only role selection; no password required.</span><button class="persona-continue" id="personaContinue" type="button" disabled>Continue</button></div></div>`;
+      overlay.innerHTML = `<main class="persona-card"><header class="persona-welcome"><div class="persona-logo">J</div><h1 id="personaTitle">Jobline CRM</h1><p class="persona-tagline">Field Service CRM for Local Service Teams</p><p class="persona-summary">Manage jobs, dispatch technicians, track customer history,<br>and streamline field operations in one place.</p></header><div class="persona-options" role="group" aria-label="Choose a demo role"><button class="persona-option selected" type="button" data-persona="manager" aria-pressed="true"><span class="persona-option-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6.5" r="2.5" stroke="currentColor"/><path d="M2.75 15c0-2.65 1.9-4.25 4.25-4.25s4.25 1.6 4.25 4.25M13.1 10.9c2.3.15 4.15 1.65 4.15 4.1M12.75 4.25a2.5 2.5 0 0 1 0 4.5" stroke="currentColor"/></svg></span><strong>Manager / Dispatcher</strong><span>Manage all jobs, assignments,<br>technicians, dispatch, and<br>customer history.</span></button><button class="persona-option" type="button" data-persona="technician" aria-pressed="false"><span class="persona-option-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M11.6 3.1a4.25 4.25 0 0 0-4.75 5.85l-4.1 4.1a1.55 1.55 0 0 0 2.2 2.2l4.1-4.1a4.25 4.25 0 0 0 5.85-4.75l-2.65 2.65-2.3-2.3 2.65-2.65Z" stroke="currentColor"/></svg></span><strong>Technician</strong><span>View assigned work, update<br>progress, add notes, and review<br>relevant job information.</span></button></div><div class="persona-tech-select" id="personaTechSelect" hidden><label for="personaTechnician">Demo technician</label><select id="personaTechnician">${technicians.map(name => `<option${name === technician ? ' selected' : ''}>${escapeHtml(name)}</option>`).join('')}</select></div><button class="persona-continue" id="personaContinue" type="button">Continue to Demo <span aria-hidden="true">→</span></button><a class="persona-explore" href="screens.html">Explore features</a><div class="persona-demo-note"><span></span><p>Demo environment · No password required</p><span></span></div></main>`;
       document.body.appendChild(overlay);
-      let selected = '';
+      let selected = 'manager';
       overlay.querySelectorAll('[data-persona]').forEach(button => button.addEventListener('click', () => {
         selected = button.dataset.persona;
-        overlay.querySelectorAll('[data-persona]').forEach(item => item.classList.toggle('selected', item === button));
+        overlay.querySelectorAll('[data-persona]').forEach(item => {
+          const active = item === button;
+          item.classList.toggle('selected', active);
+          item.setAttribute('aria-pressed', String(active));
+        });
         document.getElementById('personaTechSelect').hidden = selected !== 'technician';
-        document.getElementById('personaContinue').disabled = false;
       }));
       document.getElementById('personaContinue').addEventListener('click', () => {
         if (!selected) return;
@@ -230,19 +233,26 @@
 
   function applyTechnicianQueue() {
     hideByText('button,a', 'Bulk Assign');
+    document.querySelectorAll('.manager-technician-filter').forEach(element => element.classList.add('persona-hidden'));
+    document.getElementById('exportJobsButton')?.classList.add('persona-hidden');
     hideByText('button,a', 'New Job');
-    document.querySelectorAll('[data-filter="Unassigned"], [data-filter="Scheduled"]').forEach(el => {
-      if (el.dataset.filter === 'Unassigned') el.classList.add('persona-hidden');
-    });
+    document.querySelector('#queueStatusFilter option[value="Unassigned"]')?.remove();
+    document.querySelectorAll('.bulk-check').forEach(element => element.classList.add('persona-hidden'));
     filterTechnicianRows();
+    // Re-run the queue's native filter/pagination logic after the role is applied.
+    // This keeps counts, page buttons, search, status and time filters scoped to
+    // the signed-in technician instead of merely hiding other technicians' rows.
+    document.getElementById('queueStatusFilter')?.dispatchEvent(new Event('change', { bubbles:true }));
     const main = document.querySelector('main');
     if (main && !document.getElementById('technicianScopeNote')) {
       const note = document.createElement('p');
       note.id = 'technicianScopeNote';
-      note.className = 'technician-only-note';
+      note.className = 'technician-only-note technician-queue-guidance';
       note.textContent = 'Technician view: update the Stage field to start work, report a blocker, or complete a job. Open a job to review details and add notes.';
-      const filters = main.querySelector('[data-filter]')?.parentElement;
-      if (filters) (filters.closest('.queue-command-row') || filters).after(note);
+      const heading = main.querySelector('h1');
+      const subtitle = heading?.nextElementSibling;
+      if (subtitle) subtitle.after(note);
+      else if (heading) heading.after(note);
     }
     document.addEventListener('click', event => {
       const field = event.target.closest('[data-field]');
@@ -364,7 +374,6 @@
   if (!role) { showSignIn(); return; }
   addSwitcher();
   addNotificationCenter();
-  addPrototypeTrust();
   document.documentElement.dataset.persona = role;
   if (role === 'technician') setTimeout(applyTechnicianRole, 0);
   window.addEventListener('storage', event => {

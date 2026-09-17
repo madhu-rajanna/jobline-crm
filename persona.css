@@ -1,6 +1,59 @@
 .persona-signin{position:fixed;inset:0;z-index:1000;background:linear-gradient(135deg,#f5fafe 0%,#fff 52%,#f5f5f5 100%);display:flex;align-items:center;justify-content:center;padding:24px;font-family:var(--fontFamilyBase,"Segoe UI",sans-serif)}
 .persona-signin[hidden]{display:none}.persona-card{width:min(760px,100%);background:#fff;border:1px solid #e8e8e8;border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.14);padding:32px}.persona-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.persona-logo{width:40px;height:40px;border-radius:8px;background:#0f6cbd;color:#fff;display:grid;place-items:center;font-size:18px;font-weight:700}.persona-card h1{margin:0;font-size:28px;line-height:36px}.persona-card>p{margin:6px 0 24px;color:#616161}.persona-options{display:grid;grid-template-columns:1fr 1fr;gap:16px}.persona-option{border:1px solid #d1d1d1;border-radius:8px;padding:20px;background:#fff;text-align:left;color:#242424;cursor:pointer;min-height:164px}.persona-option:hover{background:#f5fafe;border-color:#0f6cbd}.persona-option.selected{background:#f5fafe;border:2px solid #0f6cbd;padding:19px}.persona-option strong{display:block;font-size:18px;margin-bottom:8px}.persona-option span{display:block;color:#616161;font-size:14px;line-height:20px}.persona-tech-select{margin-top:18px;padding-top:18px;border-top:1px solid #e8e8e8}.persona-tech-select label{display:block;font-weight:600;margin-bottom:6px}.persona-tech-select select{width:100%;height:40px;border:1px solid #d1d1d1;border-radius:4px;padding:0 10px;background:#fff}.persona-actions{display:flex;align-items:center;justify-content:space-between;margin-top:24px}.persona-hint{font-size:12px;color:#616161}.persona-continue{height:40px;border:0;border-radius:4px;background:#0f6cbd;color:#fff;padding:0 20px;font-weight:600;cursor:pointer}.persona-continue:disabled{opacity:.5;cursor:not-allowed}.persona-switcher{position:fixed;right:20px;bottom:20px;z-index:35;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #d1d1d1;border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,.14);padding:8px 10px}.persona-switcher-badge{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#deecf9;color:#0f6cbd;font-size:11px;font-weight:700}.persona-switcher-copy{line-height:16px}.persona-switcher-copy strong{display:block;font-size:12px}.persona-switcher-copy span{display:block;font-size:11px;color:#616161}.persona-switcher button{height:30px;border:0;border-radius:4px;background:transparent;color:#115ea3;font-weight:600;cursor:pointer}.persona-switcher button:hover{background:#f0f0f0}.persona-switcher-rail{position:relative;right:auto;bottom:auto;z-index:auto;width:40px;height:40px;padding:0;border:0;border-radius:50%;box-shadow:none;background:transparent;display:grid;place-items:center}.persona-switcher-rail .persona-switcher-badge{width:36px;height:36px}.persona-switcher-rail .persona-switcher-copy{display:none}.persona-switcher-rail button{position:absolute;inset:0;width:40px;height:40px;font-size:0;background:transparent}.persona-switcher-rail button:hover{background:rgba(15,108,189,.08);border-radius:50%}.persona-restricted{position:fixed;inset:0 0 0 64px;z-index:30;background:#fafafa;display:grid;place-items:center;padding:32px}.persona-restricted-card{max-width:480px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:32px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.12)}.persona-restricted-card h1{margin:0 0 8px;font-size:24px}.persona-restricted-card p{margin:0 0 20px;color:#616161}.persona-restricted-card a{display:inline-flex;height:36px;align-items:center;padding:0 16px;border-radius:4px;background:#0f6cbd;color:#fff;text-decoration:none;font-weight:600}.technician-only-note{margin:0;padding:10px 12px;border-radius:6px;background:#f5fafe;color:#424242;font-size:13px;border:1px solid #deecf9}.persona-hidden{display:none!important}.persona-forbidden-edit{cursor:default!important}.persona-forbidden-edit:hover{background:transparent!important}.technician-job-hidden{display:none!important}
+.technician-queue-guidance{margin:6px 0 0;padding:0!important;border:0!important;background:transparent!important;color:#424242;font-size:12px;line-height:18px;font-weight:500}
 .persona-stage-control{position:relative;z-index:3;width:100%;height:30px;margin-top:10px;border:1px solid #d1d1d1;border-radius:4px;background:#fff;color:#242424;padding:0 8px;font-size:12px;font-weight:600}
+
+/* Jobline role entry — Fluent 2 styling matched to the approved blue reference. */
+.persona-signin{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:38px;font-family:"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 52% 108%,rgba(8,125,255,.9) 0,rgba(8,98,220,.45) 18%,rgba(8,70,170,0) 40%),radial-gradient(circle at -4% -8%,#4598f4 0,#2370d2 24%,rgba(24,85,190,.28) 52%,rgba(8,32,106,0) 72%),linear-gradient(135deg,#2b7fdf 0%,#1555b5 35%,#0b3788 66%,#071449 100%)}
+.persona-signin::before,.persona-signin::after{content:"";position:fixed;pointer-events:none;border:1px solid rgba(147,202,255,.18);border-radius:50%}
+.persona-signin::before{width:720px;height:720px;left:-505px;bottom:-270px;box-shadow:0 0 0 86px rgba(94,166,246,.06)}
+.persona-signin::after{width:820px;height:820px;right:-630px;top:165px;box-shadow:0 0 0 102px rgba(56,123,226,.035)}
+.persona-signin[hidden]{display:none}
+html:has(.persona-signin:not([hidden])),body:has(.persona-signin:not([hidden])){overflow:hidden}
+.persona-signin .persona-card{position:relative;z-index:1;width:min(700px,100%);max-height:calc(100dvh - 76px);overflow:auto;padding:44px 48px!important;border:1px solid rgba(255,255,255,.72)!important;border-radius:14px!important;background:#fff;box-shadow:0 20px 55px rgba(2,18,62,.34)!important;text-align:center}
+.persona-welcome{display:flex;flex-direction:column;align-items:center}
+.persona-signin .persona-logo{width:64px;height:64px;margin-bottom:16px;border-radius:10px;background:linear-gradient(160deg,#1681ea 0%,#0868cc 72%,#0759ac 100%);color:#fff;display:grid;place-items:center;font-size:34px;font-weight:700;box-shadow:0 8px 18px rgba(15,108,189,.24)}
+.persona-signin .persona-card h1{margin:0!important;color:#0b1838!important;font-size:34px!important;line-height:42px!important;font-weight:700!important;letter-spacing:-.02em}
+.persona-tagline{margin:3px 0 0;color:#435574;font-size:17px;line-height:24px}
+.persona-summary{margin:18px 0 36px;color:#435574;font-size:16px;line-height:24px}
+.persona-signin .persona-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left}
+.persona-signin .persona-option{min-height:186px;padding:20px 24px;border:1px solid #c8d0dc;border-radius:8px;background:#fff;color:#0b1838;text-align:left;cursor:pointer;box-shadow:none;transition:border-color .12s,background-color .12s,box-shadow .12s}
+.persona-signin .persona-option:hover{border-color:#0f6cbd;background:#f7fbff}
+.persona-signin .persona-option.selected{padding:19px 23px;border:2px solid #0f6cbd;background:#f5fafe;box-shadow:0 4px 12px rgba(15,108,189,.12)}
+.persona-signin .persona-option .persona-option-icon{width:48px;height:48px;margin-bottom:12px;border-radius:50%;display:grid;place-items:center;background:#e7f2fc;color:#0f6cbd}.persona-signin .persona-option .persona-option-icon svg{width:24px;height:24px;display:block;overflow:visible;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.persona-signin .persona-option[data-persona="technician"] .persona-option-icon svg{transform:translateX(1px)}
+.persona-signin .persona-option[data-persona="technician"] .persona-option-icon{background:#e7f2fc;color:#0f6cbd}
+.persona-signin .persona-option strong{display:block;margin:0 0 8px;color:#0b1838;font-size:18px;line-height:24px;font-weight:600}
+.persona-signin .persona-option>span:last-child{display:block;color:#435574;font-size:14px;line-height:20px}
+.persona-signin .persona-tech-select{margin-top:14px;padding:12px 14px;border:1px solid #d1d1d1;border-radius:6px;background:#fafafa;text-align:left}
+.persona-signin .persona-tech-select label{display:block;margin-bottom:6px;color:#242424;font-size:13px;font-weight:600}
+.persona-signin .persona-tech-select select{width:100%;height:38px;border:1px solid #d1d1d1;border-radius:4px;background:#fff;color:#242424;padding:0 10px;font:inherit}
+.persona-signin .persona-continue{width:320px;height:48px;margin:34px auto 0;border:1px solid #0f6cbd!important;border-radius:6px!important;background:#0f6cbd!important;color:#fff!important;display:flex;align-items:center;justify-content:center;gap:20px;font-size:16px!important;font-weight:600!important;cursor:pointer;box-shadow:0 5px 12px rgba(15,108,189,.22);transition:background-color .12s,box-shadow .12s}
+.persona-signin .persona-continue:hover{background:#115ea3!important;box-shadow:0 6px 16px rgba(15,108,189,.28)}
+.persona-explore{display:inline-block;margin-top:18px;color:#0f6cbd;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.persona-demo-note{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px;color:#71809a;font-size:12px}
+.persona-demo-note span{width:76px;height:1px;background:#dce1e8}
+.persona-demo-note p{margin:0;white-space:nowrap}
+@media(max-width:700px){.persona-signin{padding:18px}.persona-signin .persona-card{max-height:calc(100dvh - 36px);padding:28px 22px!important}.persona-signin .persona-options{grid-template-columns:1fr}.persona-signin .persona-option{min-height:148px}.persona-signin .persona-continue{width:100%}.persona-summary br,.persona-signin .persona-option br{display:none}.persona-demo-note span{width:30px}}
+@media(min-width:701px) and (max-height:850px){
+  .persona-signin{overflow:hidden;padding:16px}
+  .persona-signin .persona-card{max-height:calc(100dvh - 32px);overflow:hidden;padding:36px 40px!important}
+  .persona-signin .persona-logo{width:48px;height:48px;margin-bottom:12px;font-size:27px}
+  .persona-signin .persona-card h1{font-size:30px!important;line-height:36px!important}
+  .persona-tagline{font-size:15px;line-height:20px}
+  .persona-summary{margin:12px 0 30px;font-size:14px;line-height:20px}
+  .persona-signin .persona-option{min-height:154px;padding:18px 20px}
+  .persona-signin .persona-option.selected{padding:17px 19px}
+  .persona-signin .persona-option .persona-option-icon{width:40px;height:40px;margin-bottom:8px}
+  .persona-signin .persona-option .persona-option-icon svg{width:22px;height:22px}
+  .persona-signin .persona-option strong{margin-bottom:4px;font-size:16px;line-height:22px}
+  .persona-signin .persona-option>span:last-child{font-size:13px;line-height:18px}
+  .persona-signin .persona-tech-select{margin-top:14px;padding:10px 12px}
+  .persona-signin .persona-tech-select label{margin-bottom:4px}
+  .persona-signin .persona-tech-select select{height:34px}
+  .persona-signin .persona-continue{height:42px;margin-top:28px}
+  .persona-explore{margin-top:14px}
+  .persona-demo-note{margin-top:18px}
+}
 .technician-note-preview{display:block;margin-top:3px;color:#115ea3;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .rail-utilities{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid #e8e8e8}
 .rail-utilities .prototype-trust-button-rail,.rail-utilities .notification-bell-rail,.rail-utilities .persona-switcher-rail{position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;z-index:2;width:40px;height:40px;min-height:40px;margin:0;border:0;border-radius:6px;box-shadow:none;background:transparent}

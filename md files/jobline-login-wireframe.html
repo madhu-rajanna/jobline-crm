@@ -1,0 +1,86 @@
+<div id="jobline-login-wireframe-v2">
+  <style>
+    #jobline-login-wireframe-v2{--jl-navy:light-dark(#0b2f55,#0b2f55);--jl-blue:light-dark(#0f6cbd,#0f6cbd);--jl-blue-soft:light-dark(#eaf3fc,#eaf3fc);--jl-white:light-dark(#fff,#fff);--jl-ink:light-dark(#242424,#242424);--jl-muted:light-dark(#616161,#616161);--jl-border:light-dark(#d1d1d1,#d1d1d1);overflow:hidden;border-radius:12px;background:var(--jl-white);color:var(--jl-ink);box-shadow:0 18px 50px color-mix(in srgb,var(--foreground) 20%,transparent)}
+    #jobline-login-wireframe-v2 *{box-sizing:border-box}
+    #jobline-login-wireframe-v2 .jl-shell{min-height:650px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr)}
+    #jobline-login-wireframe-v2 .jl-story{position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;padding:52px;background:var(--jl-navy);color:var(--jl-white)}
+    #jobline-login-wireframe-v2 .jl-story:after{content:"";position:absolute;right:-140px;bottom:-180px;width:420px;height:420px;border:1px solid color-mix(in srgb,var(--jl-white) 12%,transparent);border-radius:50%}
+    #jobline-login-wireframe-v2 .jl-brand{position:relative;z-index:1;display:flex;align-items:center;gap:12px;font-weight:500}
+    #jobline-login-wireframe-v2 .jl-mark{display:grid;place-items:center;width:40px;height:40px;border-radius:7px;background:var(--jl-blue);color:var(--jl-white);font-weight:500}
+    #jobline-login-wireframe-v2 .jl-story .jl-mark{background:var(--jl-white);color:var(--jl-navy)}
+    #jobline-login-wireframe-v2 .jl-message{position:relative;z-index:1;max-width:590px}
+    #jobline-login-wireframe-v2 .jl-eyebrow{margin:0 0 18px;color:color-mix(in srgb,var(--jl-white) 72%,transparent);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+    #jobline-login-wireframe-v2 h1{max-width:580px;margin:0 0 22px;color:inherit}
+    #jobline-login-wireframe-v2 .jl-lead{max-width:550px;margin:0;color:color-mix(in srgb,var(--jl-white) 82%,transparent)}
+    #jobline-login-wireframe-v2 .jl-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px;padding-top:28px;border-top:1px solid color-mix(in srgb,var(--jl-white) 16%,transparent)}
+    #jobline-login-wireframe-v2 .jl-benefit{display:grid;gap:8px;color:color-mix(in srgb,var(--jl-white) 78%,transparent)}
+    #jobline-login-wireframe-v2 .jl-benefit strong{color:var(--jl-white);font-weight:500}
+    #jobline-login-wireframe-v2 .jl-benefit i{color:color-mix(in srgb,var(--jl-blue) 50%,var(--jl-white))}
+    #jobline-login-wireframe-v2 .jl-proof{position:relative;z-index:1;margin:0;color:color-mix(in srgb,var(--jl-white) 62%,transparent)}
+    #jobline-login-wireframe-v2 .jl-entry{display:grid;place-items:center;padding:52px;background:var(--jl-white)}
+    #jobline-login-wireframe-v2 .jl-auth{width:min(100%,440px)}
+    #jobline-login-wireframe-v2 .jl-auth-head{margin-bottom:30px}
+    #jobline-login-wireframe-v2 .jl-auth-head .jl-mark{margin-bottom:22px}
+    #jobline-login-wireframe-v2 .jl-auth-head h2{margin:0 0 8px;color:var(--jl-ink)}
+    #jobline-login-wireframe-v2 .jl-auth-head p{margin:0;color:var(--jl-muted)}
+    #jobline-login-wireframe-v2 .jl-role-label{margin:0 0 10px;color:var(--jl-ink);font-weight:500}
+    #jobline-login-wireframe-v2 .jl-role-list{display:grid;gap:12px}
+    #jobline-login-wireframe-v2 .jl-role{width:100%;min-height:78px;display:grid;grid-template-columns:42px 1fr 22px;align-items:center;gap:14px;padding:14px 16px;text-align:left;border:1px solid var(--jl-border);border-radius:8px;background:var(--jl-white);color:var(--jl-ink);cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s}
+    #jobline-login-wireframe-v2 .jl-role:hover{border-color:var(--jl-blue)}
+    #jobline-login-wireframe-v2 .jl-role[aria-pressed="true"]{border-color:var(--jl-blue);background:var(--jl-blue-soft);box-shadow:0 0 0 2px color-mix(in srgb,var(--jl-blue) 18%,transparent)}
+    #jobline-login-wireframe-v2 .jl-role-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--jl-blue-soft);color:var(--jl-blue)}
+    #jobline-login-wireframe-v2 .jl-role-copy{display:grid;gap:3px}
+    #jobline-login-wireframe-v2 .jl-role-copy strong{font-weight:500}
+    #jobline-login-wireframe-v2 .jl-role-copy span{color:var(--jl-muted)}
+    #jobline-login-wireframe-v2 .jl-role-arrow{color:var(--jl-muted)}
+    #jobline-login-wireframe-v2 .jl-continue{width:100%;min-height:46px;margin-top:20px;border:1px solid var(--jl-blue);border-radius:4px;background:var(--jl-blue);color:var(--jl-white);font-weight:500;cursor:pointer}
+    #jobline-login-wireframe-v2 .jl-security{display:flex;align-items:center;justify-content:center;gap:7px;margin:18px 0 0;color:var(--jl-muted)}
+    #jobline-login-wireframe-v2 .jl-legal{display:flex;justify-content:center;gap:18px;margin-top:24px;padding-top:20px;border-top:1px solid var(--jl-border)}
+    #jobline-login-wireframe-v2 .jl-legal a{color:var(--jl-muted)}
+    @media(max-width:780px){#jobline-login-wireframe-v2 .jl-shell{grid-template-columns:1fr}#jobline-login-wireframe-v2 .jl-story{min-height:400px;padding:34px}#jobline-login-wireframe-v2 .jl-entry{padding:34px}#jobline-login-wireframe-v2 .jl-benefits{grid-template-columns:1fr;gap:12px}}
+  </style>
+  <section class="jl-shell" aria-label="Revised Jobline sign-in concept">
+    <div class="jl-story">
+      <div class="jl-brand"><span class="jl-mark" aria-hidden="true">J</span><span>Jobline CRM</span></div>
+      <div class="jl-message">
+        <p class="jl-eyebrow">Field service operations</p>
+        <h1>Every job. Every technician. One clear view.</h1>
+        <p class="jl-lead">Jobline gives service teams one place to prioritize urgent work, dispatch the right technician, and deliver on every customer promise.</p>
+        <div class="jl-benefits" aria-label="Jobline capabilities">
+          <span class="jl-benefit"><i data-lucide="circle-alert" aria-hidden="true"></i><strong>Prioritize</strong><span>Know what needs attention now</span></span>
+          <span class="jl-benefit"><i data-lucide="route" aria-hidden="true"></i><strong>Dispatch</strong><span>Match jobs to available technicians</span></span>
+          <span class="jl-benefit"><i data-lucide="circle-check" aria-hidden="true"></i><strong>Deliver</strong><span>Keep work and promises on track</span></span>
+        </div>
+      </div>
+      <p class="jl-proof">Built for the people who keep field service moving.</p>
+    </div>
+    <div class="jl-entry">
+      <div class="jl-auth">
+        <div class="jl-auth-head">
+          <span class="jl-mark" aria-hidden="true">J</span>
+          <h2>Welcome to Jobline</h2>
+          <p>Choose your workspace to continue.</p>
+        </div>
+        <p class="jl-role-label">Sign in as</p>
+        <div class="jl-role-list" role="group" aria-label="Choose a Jobline role">
+          <button class="jl-role" type="button" aria-pressed="true" data-role="Manager / Dispatcher">
+            <span class="jl-role-icon"><i data-lucide="layout-dashboard" aria-hidden="true"></i></span>
+            <span class="jl-role-copy"><strong>Manager / Dispatcher</strong><span>Prioritize, assign, and oversee all jobs</span></span>
+            <i class="jl-role-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+          </button>
+          <button class="jl-role" type="button" aria-pressed="false" data-role="Technician">
+            <span class="jl-role-icon"><i data-lucide="wrench" aria-hidden="true"></i></span>
+            <span class="jl-role-copy"><strong>Technician</strong><span>View assignments and update field work</span></span>
+            <i class="jl-role-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <button class="jl-continue" type="button">Continue as Manager / Dispatcher</button>
+        <p class="jl-security"><i data-lucide="shield-check" aria-hidden="true"></i>Secure prototype access</p>
+        <div class="jl-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    (()=>{const root=document.getElementById('jobline-login-wireframe-v2');const roles=[...root.querySelectorAll('.jl-role')];const action=root.querySelector('.jl-continue');roles.forEach(role=>role.addEventListener('click',()=>{roles.forEach(item=>item.setAttribute('aria-pressed',String(item===role)));action.textContent=`Continue as ${role.dataset.role}`}))})();
+  </script>
+</div>

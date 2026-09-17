@@ -55,6 +55,20 @@
   header.querySelector('.jobline-shell-center').appendChild(search);
   const searchInput = search.querySelector('input');
   const page = location.pathname.split('/').pop() || 'index.html';
+  const breadcrumbLabels = {
+    'index.html': 'Job Queue',
+    'dispatch-board.html': 'Dispatch Board',
+    'customers-list.html': 'Customers'
+  };
+  const breadcrumbLabel = breadcrumbLabels[page];
+  const main = document.querySelector('main');
+  if (breadcrumbLabel && main && !main.querySelector('.jobline-breadcrumb')) {
+    const breadcrumb = document.createElement('nav');
+    breadcrumb.className = 'jobline-breadcrumb';
+    breadcrumb.setAttribute('aria-label', 'Breadcrumb');
+    breadcrumb.innerHTML = `<a href="index.html">Jobline Home</a><span aria-hidden="true">›</span><strong aria-current="page">${breadcrumbLabel}</strong>`;
+    main.prepend(breadcrumb);
+  }
   const initialSearch = new URLSearchParams(location.search).get('search');
   if (page === 'index.html' && initialSearch && searchInput) {
     searchInput.value = initialSearch;

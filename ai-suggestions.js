@@ -47,7 +47,11 @@
     toggleButton.className = 'ghost-btn ai-actions-toggle';
     toggleButton.type = 'button';
     toggleButton.setAttribute('aria-pressed', String(queueAiVisible));
-    toggleButton.innerHTML = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.18 2.73a.85.85 0 0 1 1.64 0l.67 2.47a4.8 4.8 0 0 0 3.31 3.31l2.47.67a.85.85 0 0 1 0 1.64l-2.47.67a4.8 4.8 0 0 0-3.31 3.31l-.67 2.47a.85.85 0 0 1-1.64 0l-.67-2.47a4.8 4.8 0 0 0-3.31-3.31l-2.47-.67a.85.85 0 0 1 0-1.64l2.47-.67A4.8 4.8 0 0 0 8.51 5.2l.67-2.47Z"/></svg><span>${queueAiVisible ? 'Hide AI actions' : 'AI actions'}</span>`;
+    const toggleLabel = queueAiVisible ? 'Hide AI suggested actions' : 'Show AI suggested actions';
+    toggleButton.classList.add('ai-actions-icon-only');
+    toggleButton.setAttribute('aria-label', toggleLabel);
+    toggleButton.title = toggleLabel;
+    toggleButton.innerHTML = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9.18 2.73a.85.85 0 0 1 1.64 0l.67 2.47a4.8 4.8 0 0 0 3.31 3.31l2.47.67a.85.85 0 0 1 0 1.64l-2.47.67a4.8 4.8 0 0 0-3.31 3.31l-.67 2.47a.85.85 0 0 1-1.64 0l-.67-2.47a4.8 4.8 0 0 0-3.31-3.31l-2.47-.67a.85.85 0 0 1 0-1.64l2.47-.67A4.8 4.8 0 0 0 8.51 5.2l.67-2.47Z"/></svg>`;
     toggleButton.addEventListener('click', () => {
       const nextUrl = new URL(location.href);
       if (queueAiVisible) nextUrl.searchParams.delete('show-ai');
@@ -130,24 +134,24 @@
     return {label:'Create summary',kind:'summary',stage,reason:'Prepare a concise record of the completed work for customer history.'};
   }
 
-  const head = table.querySelector('.jq-head');
-  if (head && queueAiVisible) {
-    head.classList.add('ai-enabled');
-    const label = document.createElement('span');
-    label.className = 'ai-head';
-    label.textContent = 'AI suggested action';
-    head.appendChild(label);
-  }
   const proposalNotice = document.createElement('div');
   proposalNotice.className = 'ai-table-notice';
   proposalNotice.setAttribute('role','note');
   proposalNotice.innerHTML = '<strong>AI suggestions</strong><span>Simulated proposals only. Review and approve before any job data changes.</span>';
   if (queueAiVisible) {
     table.before(proposalNotice);
+    const tableHead = table.querySelector('.jq-head');
+    if (tableHead && !tableHead.querySelector('.ai-action-head')) {
+      tableHead.classList.add('ai-enabled');
+      const actionHead = document.createElement('span');
+      actionHead.className = 'th ai-head ai-action-head';
+      actionHead.textContent = 'AI suggested action';
+      tableHead.appendChild(actionHead);
+    }
     table.querySelectorAll('.jq-row').forEach(row => {
       row.classList.add('ai-enabled');
       const proposal = recommendationFor(row);
-      const cell = document.createElement('div');
+      const cell = document.createElement('span');
       cell.className = 'ai-suggest-cell';
       const button = document.createElement('button');
       button.type = 'button';

@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>Jobline - Customers</title>
 <link rel="stylesheet" href="fluent2-alignment.css">
-<link rel="stylesheet" href="persona.css">
+<link rel="stylesheet" href="persona.css?v=20">
 <link rel="stylesheet" href="accessibility.css">
 <link rel="stylesheet" href="typography-consistency.css">
-<link rel="stylesheet" href="app-shell.css?v=4">
+<link rel="stylesheet" href="app-shell.css?v=11">
 <style>
 :root{
   --brand:#0F6CBD;--brand-hover:#115EA3;
@@ -37,8 +37,10 @@ button{font-family:var(--font);cursor:pointer;}
 .cust-card{position:relative;background:#fff;border:1px solid var(--stroke2);border-radius:8px;padding:20px;box-shadow:var(--shadow4);}
 .card-link{position:absolute;inset:0;}
 .stat3{display:grid;grid-template-columns:repeat(3,1fr);}
-.stat-num{font-size:18px;font-weight:700;color:var(--fg1);}
-.stat-lbl{font-size:11px;color:var(--fg3);margin-top:2px;}
+.cust-card div[style*="font-size:16px"][style*="font-weight:600"]{font-size:14px!important;line-height:20px!important;}
+.cust-card .avatar{font-size:12px!important;}
+.stat-num{font-size:14px!important;line-height:20px!important;font-weight:600;color:var(--fg1);}
+.stat-lbl{font-size:11px;color:var(--fg3);line-height:16px;margin-top:2px;}
 @media (max-width:1180px){ main{padding:20px !important;} .cust-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:760px){ .rail{width:56px !important;} .cust-grid{grid-template-columns:1fr;} }
 @media (max-width:620px){main>div:first-child{flex-direction:column;}main>div:first-child>div:last-child{width:100%;}main>div:first-child>div:last-child>div{width:100%!important;}}
@@ -215,8 +217,8 @@ button{font-family:var(--font);cursor:pointer;}
   });
 })();
 </script>
-<script src="persona.js?v=8"></script>
+<script src="persona.js?v=14"></script>
 <script src="accessibility.js?v=1"></script>
-<script src="app-shell.js?v=4"></script>
+<script src="app-shell.js?v=6"></script>
 </body>
 </html>

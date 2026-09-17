@@ -1,0 +1,161 @@
+<div id="jobline-grid-actions-wireframe">
+  <style>
+    #jobline-grid-actions-wireframe{
+      --jobline-bg:light-dark(#f5f5f5,#1f1f1f);
+      --jobline-surface:light-dark(#ffffff,#292929);
+      --jobline-text:light-dark(#242424,#f5f5f5);
+      --jobline-muted:light-dark(#616161,#c7c7c7);
+      --jobline-border:light-dark(#d1d1d1,#525252);
+      --jobline-blue:light-dark(#0f6cbd,#479ef5);
+      --jobline-blue-soft:light-dark(#ebf3fc,#14395b);
+      --jobline-green-soft:light-dark(#dff6dd,#164b2b);
+      --jobline-green-text:light-dark(#107c10,#70d888);
+      --jobline-yellow-soft:light-dark(#fff4ce,#5c4813);
+      --jobline-red-soft:light-dark(#fde7e9,#5b2027);
+      --jobline-red-text:light-dark(#c4314b,#ff99a4);
+      color:var(--jobline-text);
+      font-family:"Segoe UI","Segoe UI Web",system-ui,sans-serif;
+      background:var(--jobline-bg);
+      padding:20px;
+    }
+    #jobline-grid-actions-wireframe *{box-sizing:border-box}
+    #jobline-grid-actions-wireframe .jl-window{background:var(--jobline-bg);max-width:1000px;margin:0 auto}
+    #jobline-grid-actions-wireframe .jl-title{margin-bottom:16px}
+    #jobline-grid-actions-wireframe .jl-title h2{margin:0;font-weight:500}
+    #jobline-grid-actions-wireframe .jl-title p{margin:4px 0 0;color:var(--jobline-muted)}
+    #jobline-grid-actions-wireframe .jl-toolbar,
+    #jobline-grid-actions-wireframe .jl-selection{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--jobline-surface);border:1px solid var(--jobline-border);padding:12px;margin-bottom:12px}
+    #jobline-grid-actions-wireframe .jl-toolbar[hidden],
+    #jobline-grid-actions-wireframe .jl-selection[hidden]{display:none}
+    #jobline-grid-actions-wireframe input[type="search"],
+    #jobline-grid-actions-wireframe select,
+    #jobline-grid-actions-wireframe button{min-height:36px;border:1px solid var(--jobline-border);background:var(--jobline-surface);color:var(--jobline-text);padding:0 12px;font:inherit;border-radius:4px}
+    #jobline-grid-actions-wireframe input[type="search"]{min-width:210px;flex:1}
+    #jobline-grid-actions-wireframe button{font-weight:500;cursor:pointer}
+    #jobline-grid-actions-wireframe .jl-primary{background:var(--jobline-blue);border-color:var(--jobline-blue);color:#fff;margin-left:auto}
+    #jobline-grid-actions-wireframe .jl-selection{background:var(--jobline-blue-soft);border-color:var(--jobline-blue)}
+    #jobline-grid-actions-wireframe .jl-selection strong{margin-right:auto;font-weight:500}
+    #jobline-grid-actions-wireframe .jl-bulk-panel{background:var(--jobline-surface);border:1px solid var(--jobline-border);padding:16px;margin-bottom:12px}
+    #jobline-grid-actions-wireframe .jl-bulk-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+    #jobline-grid-actions-wireframe .jl-bulk-head h3{margin:0;font-weight:500}
+    #jobline-grid-actions-wireframe .jl-bulk-head p{margin:3px 0 0;color:var(--jobline-muted)}
+    #jobline-grid-actions-wireframe .jl-assignment{display:grid;grid-template-columns:minmax(170px,1fr) minmax(180px,1fr);align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--jobline-border)}
+    #jobline-grid-actions-wireframe .jl-assignment span{display:block;color:var(--jobline-muted)}
+    #jobline-grid-actions-wireframe .jl-schedule{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px;margin-top:4px;border-top:1px solid var(--jobline-border)}
+    #jobline-grid-actions-wireframe .jl-field{display:flex;flex-direction:column;gap:5px}
+    #jobline-grid-actions-wireframe .jl-field input{min-height:36px;border:1px solid var(--jobline-border);background:var(--jobline-surface);color:var(--jobline-text);padding:0 10px;border-radius:4px;font:inherit}
+    #jobline-grid-actions-wireframe .jl-panel-note{margin:10px 0;color:var(--jobline-muted)}
+    #jobline-grid-actions-wireframe .jl-panel-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+    #jobline-grid-actions-wireframe .jl-table-wrap{overflow-x:auto;background:var(--jobline-surface);border:1px solid var(--jobline-border)}
+    #jobline-grid-actions-wireframe table{width:100%;border-collapse:collapse;min-width:780px}
+    #jobline-grid-actions-wireframe th,
+    #jobline-grid-actions-wireframe td{text-align:left;padding:12px;border-bottom:1px solid var(--jobline-border);white-space:nowrap}
+    #jobline-grid-actions-wireframe th{font-weight:500}
+    #jobline-grid-actions-wireframe tbody tr:last-child td{border-bottom:0}
+    #jobline-grid-actions-wireframe tbody tr.is-selected{background:var(--jobline-blue-soft)}
+    #jobline-grid-actions-wireframe .jl-customer{color:var(--jobline-blue);font-weight:500}
+    #jobline-grid-actions-wireframe .jl-status{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-weight:500}
+    #jobline-grid-actions-wireframe .jl-status.unassigned{background:var(--jobline-red-soft);color:var(--jobline-red-text)}
+    #jobline-grid-actions-wireframe .jl-status.scheduled{background:var(--jobline-blue-soft);color:var(--jobline-blue)}
+    #jobline-grid-actions-wireframe .jl-status.done{background:var(--jobline-green-soft);color:var(--jobline-green-text)}
+    #jobline-grid-actions-wireframe .jl-note{margin:10px 0 0;color:var(--jobline-muted)}
+    @media(max-width:680px){
+      #jobline-grid-actions-wireframe{padding:12px}
+      #jobline-grid-actions-wireframe input[type="search"]{min-width:100%;flex-basis:100%}
+      #jobline-grid-actions-wireframe .jl-primary{margin-left:0}
+      #jobline-grid-actions-wireframe .jl-assignment,#jobline-grid-actions-wireframe .jl-schedule{grid-template-columns:1fr}
+    }
+  </style>
+  <section class="jl-window" aria-labelledby="jl-wireframe-title">
+    <header class="jl-title">
+      <h2 id="jl-wireframe-title">Job Queue</h2>
+      <p>Table actions—simple until jobs are selected</p>
+    </header>
+
+    <div class="jl-toolbar" id="jl-normal-toolbar" hidden>
+      <input type="search" aria-label="Filter jobs" placeholder="Filter jobs…">
+      <select aria-label="Filter by status">
+        <option>Status: All</option>
+        <option>Unassigned</option>
+        <option>Scheduled</option>
+        <option>In Progress</option>
+        <option>Blocked</option>
+        <option>Done</option>
+      </select>
+      <select aria-label="Filter by time">
+        <option>Time: Any</option>
+        <option>Today</option>
+        <option>Tomorrow</option>
+        <option>This week</option>
+        <option>Overdue</option>
+      </select>
+      <select aria-label="Filter by technician">
+        <option>Technician: All</option>
+        <option>Unassigned</option>
+        <option>Dana Kim</option>
+        <option>Marcus Reyes</option>
+        <option>Sana Patel</option>
+      </select>
+      <button type="button">Export</button>
+      <button class="jl-primary" type="button">+ New Job</button>
+    </div>
+
+    <div class="jl-selection" id="jl-selection-toolbar" aria-live="polite">
+      <strong id="jl-selection-count">2 jobs selected</strong>
+      <button class="jl-primary" id="jl-open-bulk" type="button">Bulk Assign</button>
+      <button type="button">Export selected</button>
+      <button id="jl-clear-selection" type="button">Clear selection</button>
+    </div>
+
+    <section class="jl-bulk-panel" id="jl-bulk-panel" aria-labelledby="jl-bulk-title">
+      <div class="jl-bulk-head"><div><h3 id="jl-bulk-title">Bulk assign 2 jobs</h3><p>Each job keeps its current technician unless you change it below.</p></div><button id="jl-close-bulk" type="button">Close</button></div>
+      <div class="jl-assignment"><div><strong>Rosalind Kerr</strong><span>Currently unassigned</span></div><select aria-label="Technician for Rosalind Kerr"><option>Choose technician…</option><option>Dana Kim</option><option>Marcus Reyes</option><option>Sana Patel</option></select></div>
+      <div class="jl-assignment"><div><strong>Meadowbrook HOA</strong><span>Currently Dana Kim</span></div><select aria-label="Technician for Meadowbrook HOA"><option>Keep Dana Kim</option><option>Marcus Reyes</option><option>Sana Patel</option><option>Unassigned</option></select></div>
+      <div class="jl-schedule">
+        <label class="jl-field">Shared schedule date <input type="date"><span>Leave blank to keep each job’s current date.</span></label>
+        <label class="jl-field">Shared time window <select><option>Keep existing times</option><option>8 AM–12 PM</option><option>12–4 PM</option><option>4–8 PM</option></select></label>
+      </div>
+      <p class="jl-panel-note">Only fields you deliberately change are updated. Existing assignments and schedules are never overwritten automatically.</p>
+      <label><input type="checkbox" checked> Notify technicians whose assignments or schedules changed</label>
+      <div class="jl-panel-actions"><button type="button">Cancel</button><button class="jl-primary" type="button">Apply changes to 2 jobs</button></div>
+    </section>
+
+    <div class="jl-table-wrap">
+      <table aria-label="Job Queue wireframe">
+        <thead><tr><th><input id="jl-select-all" type="checkbox" aria-label="Select all jobs"></th><th>Customer</th><th>Description</th><th>Status</th><th>Technician</th><th>Promised</th></tr></thead>
+        <tbody>
+          <tr class="is-selected"><td><input class="jl-row-check" type="checkbox" aria-label="Select Rosalind Kerr" checked></td><td class="jl-customer">Rosalind Kerr</td><td>Second thermostat zone</td><td><span class="jl-status unassigned">Unassigned</span></td><td>—</td><td>Today</td></tr>
+          <tr class="is-selected"><td><input class="jl-row-check" type="checkbox" aria-label="Select Meadowbrook HOA" checked></td><td class="jl-customer">Meadowbrook HOA</td><td>Irrigation inspection</td><td><span class="jl-status scheduled">Scheduled</span></td><td>Dana Kim</td><td>Tomorrow</td></tr>
+          <tr><td><input class="jl-row-check" type="checkbox" aria-label="Select Tobias Lindqvist"></td><td class="jl-customer">Tobias Lindqvist</td><td>Gutter cleaning</td><td><span class="jl-status done">Done</span></td><td>Marcus Reyes</td><td>Sep 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="jl-note">Status and time remain table filters. Bulk Assign preserves the current per-job assignment and combines technician and optional scheduling changes in one safe panel.</p>
+  </section>
+  <script>
+    (() => {
+      const root = document.getElementById('jobline-grid-actions-wireframe');
+      const normal = root.querySelector('#jl-normal-toolbar');
+      const selected = root.querySelector('#jl-selection-toolbar');
+      const count = root.querySelector('#jl-selection-count');
+      const selectAll = root.querySelector('#jl-select-all');
+      const checks = [...root.querySelectorAll('.jl-row-check')];
+      const bulkPanel = root.querySelector('#jl-bulk-panel');
+      function update(){
+        const total = checks.filter(check => check.checked).length;
+        normal.hidden = total > 0;
+        selected.hidden = total === 0;
+        count.textContent = `${total} ${total === 1 ? 'job' : 'jobs'} selected`;
+        selectAll.checked = total === checks.length;
+        selectAll.indeterminate = total > 0 && total < checks.length;
+        checks.forEach(check => check.closest('tr').classList.toggle('is-selected', check.checked));
+      }
+      selectAll.addEventListener('change', () => { checks.forEach(check => check.checked = selectAll.checked); update(); });
+      checks.forEach(check => check.addEventListener('change', update));
+      root.querySelector('#jl-open-bulk').addEventListener('click', () => { bulkPanel.hidden = false; });
+      root.querySelector('#jl-close-bulk').addEventListener('click', () => { bulkPanel.hidden = true; });
+      root.querySelector('#jl-clear-selection').addEventListener('click', () => { checks.forEach(check => check.checked = false); bulkPanel.hidden = true; update(); });
+      update();
+    })();
+  </script>
+</div>

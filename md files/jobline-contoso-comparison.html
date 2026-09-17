@@ -1,0 +1,63 @@
+<section id="jobline-contoso-audit" aria-labelledby="audit-title">
+  <style>
+    #jobline-contoso-audit{display:grid;gap:20px;color:var(--foreground)}
+    #jobline-contoso-audit .audit-head{display:grid;gap:8px}
+    #jobline-contoso-audit .audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    #jobline-contoso-audit .audit-column{display:grid;gap:12px;align-content:start}
+    #jobline-contoso-audit .audit-label{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #jobline-contoso-audit .audit-list{display:grid;gap:10px}
+    #jobline-contoso-audit .audit-item{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:12px 0;border-top:1px solid var(--border)}
+    #jobline-contoso-audit .audit-number{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--muted);color:var(--foreground);font-weight:500}
+    #jobline-contoso-audit .audit-item[data-risk="high"] .audit-number{background:var(--destructive);color:var(--primary-foreground)}
+    #jobline-contoso-audit .audit-copy{display:grid;gap:3px}
+    #jobline-contoso-audit .audit-sample{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;padding:12px;background:var(--muted);color:var(--muted-foreground)}
+    #jobline-contoso-audit .audit-sample strong{color:var(--foreground)}
+    #jobline-contoso-audit .audit-target{border-left:3px solid var(--blue);padding-left:10px}
+    #jobline-contoso-audit .audit-footer{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:4px}
+    #jobline-contoso-audit .audit-priority{display:grid;gap:4px;border-top:3px solid var(--border);padding-top:10px}
+    #jobline-contoso-audit .audit-priority:first-child{border-color:var(--destructive)}
+    #jobline-contoso-audit .audit-priority:nth-child(2){border-color:var(--orange)}
+    #jobline-contoso-audit .audit-priority:nth-child(3){border-color:var(--blue)}
+    @media(max-width:720px){#jobline-contoso-audit .audit-grid,#jobline-contoso-audit .audit-footer{grid-template-columns:1fr}}
+  </style>
+  <div class="audit-head">
+    <h2 id="audit-title">Jobline CRM vs. Contoso visual-system audit</h2>
+    <div class="text-muted">Red numbers mark the inconsistencies most visible to the client.</div>
+  </div>
+
+  <div class="audit-grid">
+    <section class="audit-column" aria-labelledby="jobline-label">
+      <div class="audit-label"><h3 id="jobline-label">Jobline today</h3><span class="viz-badge">Mixed system</span></div>
+      <div class="audit-sample"><strong>Job Queue</strong><span>10 jobs across 3 technicians</span><b>URGENT JOBS</b><span>3</span></div>
+      <div class="audit-list">
+        <div class="audit-item" data-risk="high"><span class="audit-number">1</span><div class="audit-copy"><strong>Competing type scales</strong><span class="text-muted">Page title, metric labels, tabs, table headers and row text use many unrelated sizes and 400/500/600/650/700 weights.</span></div></div>
+        <div class="audit-item" data-risk="high"><span class="audit-number">2</span><div class="audit-copy"><strong>Mixed capitalization rules</strong><span class="text-muted">Metric labels are uppercase, navigation and table headers are title case, while other labels use sentence case.</span></div></div>
+        <div class="audit-item"><span class="audit-number">3</span><div class="audit-copy"><strong>Uneven vertical rhythm</strong><span class="text-muted">Large space between page heading, metrics, attention strip, tabs, actions and table creates several competing bands.</span></div></div>
+        <div class="audit-item"><span class="audit-number">4</span><div class="audit-copy"><strong>Too many component treatments</strong><span class="text-muted">Large metric cards, yellow attention banner, pill tabs, text actions, solid button and colored status pills all compete at once.</span></div></div>
+        <div class="audit-item"><span class="audit-number">5</span><div class="audit-copy"><strong>Table hierarchy is inconsistent</strong><span class="text-muted">Customer names, fees, status and unassigned warnings are all bold, so scan priority is unclear.</span></div></div>
+        <div class="audit-item"><span class="audit-number">6</span><div class="audit-copy"><strong>Color semantics overlap</strong><span class="text-muted">Blue signals navigation, action, stage and selection; red appears for both risk and assignment state.</span></div></div>
+        <div class="audit-item"><span class="audit-number">7</span><div class="audit-copy"><strong>Shell feels separate from content</strong><span class="text-muted">Header, sidebar, dashboard cards and table appear to follow slightly different spacing and sizing systems.</span></div></div>
+      </div>
+    </section>
+
+    <section class="audit-column" aria-labelledby="contoso-label">
+      <div class="audit-label"><h3 id="contoso-label">Contoso reference</h3><span class="viz-badge">Unified system</span></div>
+      <div class="audit-sample audit-target"><strong>Inventory &amp; Purchase Orders</strong><span>One record per inventory item.</span><b>Status: All</b><span>New Record</span></div>
+      <div class="audit-list">
+        <div class="audit-item"><span class="audit-number">1</span><div class="audit-copy"><strong>Small, controlled type ramp</strong><span class="text-muted">One display title, one body size, one compact label/table size, with emphasis created mostly through weight.</span></div></div>
+        <div class="audit-item"><span class="audit-number">2</span><div class="audit-copy"><strong>Sentence/title case is predictable</strong><span class="text-muted">Uppercase is reserved for compact metadata and statuses rather than used across whole dashboard regions.</span></div></div>
+        <div class="audit-item"><span class="audit-number">3</span><div class="audit-copy"><strong>Consistent 8-based spacing rhythm</strong><span class="text-muted">Page title, toolbar, cards and tables share repeatable gaps and aligned left edges.</span></div></div>
+        <div class="audit-item"><span class="audit-number">4</span><div class="audit-copy"><strong>Quiet surfaces and clear priority</strong><span class="text-muted">Neutral containers dominate; color is reserved for primary actions, state, risk and AI assistance.</span></div></div>
+        <div class="audit-item"><span class="audit-number">5</span><div class="audit-copy"><strong>Data-first table hierarchy</strong><span class="text-muted">Primary identifiers are links, body data stays regular weight, and exceptions receive focused color.</span></div></div>
+        <div class="audit-item"><span class="audit-number">6</span><div class="audit-copy"><strong>Stable semantic colors</strong><span class="text-muted">Blue means navigation/action, green success, orange warning, red failure, and purple AI.</span></div></div>
+        <div class="audit-item"><span class="audit-number">7</span><div class="audit-copy"><strong>One shared application shell</strong><span class="text-muted">Header, navigation, page gutters and content panels repeat consistently across list, dashboard, form and detail screens.</span></div></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="audit-footer" aria-label="Recommended correction order">
+    <div class="audit-priority"><strong>Fix first</strong><span class="text-muted">Typography tokens, weights, capitalization and line heights.</span></div>
+    <div class="audit-priority"><strong>Fix second</strong><span class="text-muted">Page grid, spacing rhythm, toolbar and table hierarchy.</span></div>
+    <div class="audit-priority"><strong>Fix third</strong><span class="text-muted">Color semantics, component states and cross-page shell consistency.</span></div>
+  </div>
+</section>

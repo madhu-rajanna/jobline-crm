@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <title>Jobline - Job Queue</title>
 <link rel="stylesheet" href="fluent2-alignment.css">
-<link rel="stylesheet" href="persona.css">
-<link rel="stylesheet" href="ai-suggestions.css">
+<link rel="stylesheet" href="persona.css?v=20">
+<link rel="stylesheet" href="ai-suggestions.css?v=26">
 <link rel="stylesheet" href="operations-overview.css">
 <link rel="stylesheet" href="accessibility.css">
 <link rel="stylesheet" href="typography-consistency.css">
-<link rel="stylesheet" href="app-shell.css?v=4">
+<link rel="stylesheet" href="app-shell.css?v=11">
+<link rel="stylesheet" href="job-queue-contoso.css?v=20">
 <style>
 :root{
   --brand:#0F6CBD;--brand-hover:#115EA3;--brand-pressed:#0B4F8A;
@@ -39,6 +40,7 @@ input{font-family:var(--font);}
 .chip.active{background:var(--brand-tint-20);color:var(--brand);font-weight:600;}
 .ghost-btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:4px;border:none;background:transparent;color:var(--fg2);font-size:13px;font-weight:600;cursor:pointer;}
 .ghost-btn:hover{background:var(--nbg-hover);}
+.queue-filter-select{height:36px;min-width:138px;padding:0 30px 0 10px;border:1px solid var(--stroke1);border-radius:4px;background:var(--nbg1);color:var(--fg2);font:400 14px/20px var(--font);cursor:pointer;}
 .icon-btn{width:32px;height:32px;border-radius:999px;border:1px solid var(--stroke1);background:var(--nbg1);color:var(--fg2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;line-height:16px;white-space:nowrap;}
 .jq-row{position:relative;display:grid;grid-template-columns:32px 150px minmax(190px,1fr) 116px 118px 104px 156px 72px 56px 78px;gap:10px;align-items:center;padding:0 16px;height:52px;border-bottom:1px solid var(--stroke2);}
@@ -132,13 +134,31 @@ input{font-family:var(--font);}
     </div>
 
     <div class="queue-command-row">
-    <div class="filters" style="display:flex;align-items:center;gap:4px;height:32px;">
-      <button class="chip active" data-filter="All">All</button>
-      <button class="chip" data-filter="Unassigned">Unassigned</button>
-      <button class="chip" data-filter="Scheduled">Scheduled</button>
-      <button class="chip" data-filter="In Progress">In Progress</button>
-      <button class="chip" data-filter="Blocked">Blocked</button>
-      <button class="chip" data-filter="Done">Done</button>
+    <div class="filters manager-table-filters" style="display:flex;align-items:center;gap:8px;height:36px;">
+      <label class="sr-only" for="queueStatusFilter">Filter jobs by status</label>
+      <select class="queue-filter-select" id="queueStatusFilter">
+        <option value="All">Status: All</option>
+        <option value="Unassigned">Unassigned</option>
+        <option value="Scheduled">Scheduled / Assigned</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Blocked">Blocked</option>
+        <option value="Done">Done</option>
+      </select>
+      <label class="sr-only" for="queueTimeFilter">Filter jobs by promised time</label>
+      <select class="queue-filter-select" id="queueTimeFilter">
+        <option value="Any">Time: Any</option>
+        <option value="Today">Today</option>
+        <option value="Next7">Next 7 days</option>
+        <option value="Overdue">Overdue</option>
+      </select>
+      <label class="sr-only manager-technician-filter" for="queueTechnicianFilter">Filter jobs by technician</label>
+      <select class="queue-filter-select manager-technician-filter" id="queueTechnicianFilter">
+        <option value="All">Technician: All</option>
+        <option value="Unassigned">Unassigned</option>
+        <option value="Marcus Reyes">Marcus Reyes</option>
+        <option value="Dana Kim">Dana Kim</option>
+        <option value="Sana Patel">Sana Patel</option>
+      </select>
     </div>
 
     <div class="queue-primary-actions" style="display:flex;align-items:center;justify-content:space-between;">
@@ -146,10 +166,6 @@ input{font-family:var(--font);}
         <button class="ghost-btn" id="bulkAssignButton" type="button">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 6h8M4 10h8M4 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 13l1.5 1.5L17 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="lbl">Bulk Assign</span>
-        </button>
-        <button class="ghost-btn demo-hidden" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 13V4m0 0L6.5 7.5M10 4l3.5 3.5M4 14v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="lbl">Export</span>
         </button>
         <div style="width:1px;height:24px;background:var(--stroke1);margin:0 12px;"></div>
       </div>
@@ -168,10 +184,10 @@ input{font-family:var(--font);}
         <span class="th">Type</span>
         <span class="th">Created</span>
         <span class="th">Stage</span>
-        <span class="th">Dispatch / Tech</span>
+        <span class="th">Technician</span>
         <span class="th" style="text-align:right;">Fee</span>
-        <span class="th" style="text-align:right;">Days</span>
-        <span class="th">Promised</span>
+        <span class="th days-head" style="text-align:right;">Days</span>
+        <span class="th promised-head">Promised</span>
       </div>
 
       <div class="jq-row">
@@ -338,14 +354,15 @@ input{font-family:var(--font);}
     <button class="icon-btn" id="bulkCloseButton" type="button" aria-label="Close bulk assignment"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M4.09 4.09a.75.75 0 0 1 1.06 0L10 8.94l4.85-4.85a.75.75 0 1 1 1.06 1.06L11.06 10l4.85 4.85a.75.75 0 1 1-1.06 1.06L10 11.06l-4.85 4.85a.75.75 0 1 1-1.06-1.06L8.94 10 4.09 5.15a.75.75 0 0 1 0-1.06Z"/></svg></button>
   </div>
   <div class="bulk-panel-body">
-    <div class="bulk-summary"><strong id="bulkSelectedSummary">0 jobs selected</strong><br><span style="color:var(--fg3);">Choose a technician for each job. The date and time below are shared.</span></div>
+    <div class="bulk-summary"><strong id="bulkSelectedSummary">0 jobs selected</strong><br><span style="color:var(--fg3);">Review each job’s technician. Existing assignments stay unchanged unless you select someone different.</span></div>
     <div>
       <div style="font-size:13px;font-weight:600;color:var(--fg2);margin-bottom:6px;">Technician assignments</div>
       <div class="bulk-assignment-list" id="bulkAssignmentList"></div>
     </div>
-    <label class="bulk-field">Schedule date
-      <input id="bulkDate" type="date" value="2026-09-03">
+    <label class="bulk-field">Shared schedule date <span style="font-weight:400;color:var(--fg3);">(optional)</span>
+      <input id="bulkDate" type="date" aria-describedby="bulkScheduleHelp">
     </label>
+    <p id="bulkScheduleHelp" style="margin:-10px 0 0;font-size:12px;color:var(--fg3);">Leave the date blank and keep the existing time to preserve each job’s current schedule.</p>
     <label class="bulk-field">Time window
       <select id="bulkTime">
         <option>Keep existing time</option>
@@ -396,6 +413,13 @@ input{font-family:var(--font);}
     tableWrap.insertBefore(row, tableWrap.children[1]);
   });
   const rows = [...document.querySelectorAll('.jq-row')];
+  const pagination = document.createElement('div');
+  pagination.className = 'jq-pagination';
+  pagination.setAttribute('aria-label', 'Job Queue pagination');
+  pagination.innerHTML = `<span id="queueResultsSummary" aria-live="polite"></span><div class="jq-pagination-controls"><div class="jq-page-buttons" id="queuePageButtons"></div><label class="jq-page-size">Items per page:<select id="queuePageSize" aria-label="Jobs per page"><option value="5" selected>5</option><option value="10">10</option></select></label></div>`;
+  tableWrap.appendChild(pagination);
+  let currentPage = 1;
+  let pageSize = 5;
   const queueSubtitle = document.querySelector('h1 + p');
   if (queueSubtitle) queueSubtitle.textContent = `${rows.length} jobs across 3 technicians`;
   const bulkButton = document.getElementById('bulkAssignButton');
@@ -439,13 +463,18 @@ input{font-family:var(--font);}
   function renderStage(cell, stage) {
     const styles = {
       'Unassigned': ['var(--neutral-bg)', 'var(--neutral-fg)'],
-      'New': ['var(--brand-tint-20)', 'var(--brand)'],
+    'New': ['#F2EAF7', '#5C2D91'],
       'Scheduled': ['var(--brand-tint-20)', 'var(--brand)'],
       'In Progress': ['var(--warning-bg)', 'var(--warning-fg)'],
       'Blocked': ['var(--danger-bg)', 'var(--danger-fg)'],
       'Done': ['var(--success-bg)', 'var(--success-fg)']
     };
     const colors = styles[stage] || styles['Unassigned'];
+    cell.classList.remove('badge');
+    cell.classList.add('stage-cell');
+    cell.style.background = 'transparent';
+    cell.style.color = '';
+    cell.style.padding = '0';
     cell.innerHTML = `<span class="badge" style="background:${colors[0]};color:${colors[1]};">${stage}</span>`;
   }
 
@@ -459,14 +488,32 @@ input{font-family:var(--font);}
     row.dataset.customer = customer;
     row.dataset.jobKey = row.dataset.jobKey || customer;
     row.dataset.stage = stageCell?.textContent.trim() || '';
+    row.dataset.promised = cells[10]?.textContent.trim() || '';
     renderStage(stageCell, row.dataset.stage);
     const rowLink = row.querySelector('.row-link');
     if (rowLink) rowLink.href = `job-detail-drawer.html?customer=${encodeURIComponent(customer)}${row.dataset.jobKey !== customer ? `&job=${encodeURIComponent(row.dataset.jobKey)}` : ''}`;
+    const customerCell = cells[2];
+    if (customerCell && rowLink) {
+      customerCell.classList.add('customer-cell-link');
+      customerCell.setAttribute('role', 'link');
+      customerCell.setAttribute('tabindex', '0');
+      customerCell.setAttribute('aria-label', `Open ${customer} job details`);
+      const openCustomerDrawer = event => {
+        if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        location.href = rowLink.href;
+      };
+      customerCell.addEventListener('click', openCustomerDrawer);
+      customerCell.addEventListener('keydown', openCustomerDrawer);
+    }
     techCell.dataset.techCell = 'true';
     cells[3].dataset.field = 'description';
     stageCell.dataset.field = 'stage';
     techCell.dataset.field = 'technician';
     cells[8].dataset.field = 'fee';
+    cells[9].classList.add('days-cell');
+    cells[10].classList.add('promised-cell');
     [cells[3], stageCell, techCell, cells[8]].forEach(cell => cell.classList.add('inline-editable'));
     priority.dataset.priorityMarker = 'true';
     priority.style.display = 'none';
@@ -520,7 +567,10 @@ input{font-family:var(--font);}
       renderStage(rowCells[6], saved.stage);
     }
     if (saved.fee != null) rowCells[8].textContent = `$${Number(saved.fee).toLocaleString()}`;
-    if (saved.promisedShort) rowCells[10].textContent = saved.promisedShort;
+    if (saved.promisedShort) {
+      rowCells[10].textContent = saved.promisedShort;
+      row.dataset.promised = saved.promisedShort;
+    }
     if (saved.priorityColor) row.querySelector('[data-priority-marker]').style.background = saved.priorityColor;
   });
   if (normalizedSavedUpdates) writeUpdates(savedUpdates);
@@ -531,11 +581,12 @@ input{font-family:var(--font);}
     const list = document.getElementById('bulkAssignmentList');
     list.replaceChildren();
     selectedRows().forEach(row => {
-      const currentTechnician = row.querySelector('[data-tech-cell]').textContent.trim();
+      const technicianText = row.querySelector('[data-tech-cell]').textContent.trim();
+      const currentTechnician = Object.keys(techProfiles).find(name => technicianText.includes(name)) || '';
       const wrapper = document.createElement('div');
       wrapper.className = 'bulk-assignment-row';
       const details = document.createElement('div');
-      details.innerHTML = `<div class="bulk-customer-name">${row.dataset.customer}</div><div class="bulk-customer-stage">${row.dataset.stage}</div>`;
+      details.innerHTML = `<div class="bulk-customer-name">${row.dataset.customer}</div><div class="bulk-customer-stage">${row.dataset.stage} · ${currentTechnician ? `Currently ${currentTechnician}` : 'Currently unassigned'}</div>`;
       const select = document.createElement('select');
       select.className = 'inline-control job-tech-select';
       select.dataset.customer = row.dataset.customer;
@@ -552,25 +603,99 @@ input{font-family:var(--font);}
 
   let activeFilter = 'All';
   const searchInput = document.getElementById('jobSearch');
+  const statusFilter = document.getElementById('queueStatusFilter');
+  const timeFilter = document.getElementById('queueTimeFilter');
+  const technicianFilter = document.getElementById('queueTechnicianFilter');
+  let filteredRows = rows;
+
+  function promisedDateFor(row) {
+    const label = row.dataset.promised || '';
+    if (!label || label === 'TBD') return null;
+    const parsed = new Date(`${label}, 2026 00:00:00`);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  }
 
   function applyFilters() {
     const term = searchInput.value.trim().toLowerCase();
-    rows.forEach(row => {
+    const matchingRows = rows.filter(row => {
       const matchesSearch = !term || row.textContent.toLowerCase().includes(term);
-      const matchesFilter = activeFilter === 'All' ||
+      const matchesStatus = activeFilter === 'All' ||
         (activeFilter === 'Unassigned' ? row.querySelector('[data-tech-cell]').textContent.includes('Unassigned') : row.dataset.stage === activeFilter);
-      row.style.display = matchesSearch && matchesFilter ? 'grid' : 'none';
+      const selectedTechnician = technicianFilter.value;
+      const technicianName = row.querySelector('[data-tech-cell]').textContent.trim();
+      const signedInTechnician = document.documentElement.dataset.persona === 'technician' ? (localStorage.getItem('jobline-demo-technician') || 'Dana Kim') : '';
+      const matchesPersona = !signedInTechnician || technicianName.includes(signedInTechnician);
+      const matchesTechnician = selectedTechnician === 'All' ||
+        (selectedTechnician === 'Unassigned' ? technicianName.includes('Unassigned') : technicianName.includes(selectedTechnician));
+      const demoToday = new Date('2026-09-03T00:00:00');
+      const promised = promisedDateFor(row);
+      const nextWeek = new Date(demoToday); nextWeek.setDate(nextWeek.getDate() + 7);
+      const selectedTime = timeFilter.value;
+      const matchesTime = selectedTime === 'Any' ||
+        (selectedTime === 'Today' && promised?.getTime() === demoToday.getTime()) ||
+        (selectedTime === 'Next7' && promised && promised >= demoToday && promised <= nextWeek) ||
+        (selectedTime === 'Overdue' && promised && promised < demoToday && row.dataset.stage !== 'Done');
+      return matchesSearch && matchesStatus && matchesTechnician && matchesTime && matchesPersona;
     });
+    filteredRows = matchingRows;
+    const pageCount = Math.max(1, Math.ceil(matchingRows.length / pageSize));
+    currentPage = Math.min(currentPage, pageCount);
+    const start = (currentPage - 1) * pageSize;
+    const visibleRows = new Set(matchingRows.slice(start, start + pageSize));
+    rows.forEach(row => { row.style.display = visibleRows.has(row) ? 'grid' : 'none'; });
+    const resultStart = matchingRows.length ? start + 1 : 0;
+    const resultEnd = Math.min(start + pageSize, matchingRows.length);
+    document.getElementById('queueResultsSummary').textContent = `Showing ${resultStart}–${resultEnd} of ${matchingRows.length} results`;
+    const pageButtons = document.getElementById('queuePageButtons');
+    pageButtons.replaceChildren();
+    const makePageButton = (label, page, disabled, current = false, accessibleLabel = '') => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `jq-page-button${current ? ' current' : ''}`;
+      button.textContent = label;
+      button.disabled = disabled;
+      if (accessibleLabel) button.setAttribute('aria-label', accessibleLabel);
+      if (current) button.setAttribute('aria-current', 'page');
+      button.addEventListener('click', () => { currentPage = page; applyFilters(); });
+      return button;
+    };
+    pageButtons.appendChild(makePageButton('‹', currentPage - 1, currentPage === 1, false, 'Previous page'));
+    for (let page = 1; page <= pageCount; page += 1) pageButtons.appendChild(makePageButton(String(page), page, false, page === currentPage, `Page ${page}`));
+    pageButtons.appendChild(makePageButton('›', currentPage + 1, currentPage === pageCount, false, 'Next page'));
   }
 
-  searchInput.addEventListener('input', applyFilters);
-  document.querySelectorAll('[data-filter]').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('[data-filter]').forEach(chip => chip.classList.remove('active'));
-      button.classList.add('active');
-      activeFilter = button.dataset.filter;
+  searchInput.addEventListener('input', () => { currentPage = 1; applyFilters(); });
+  document.getElementById('queuePageSize').addEventListener('change', event => {
+    pageSize = Number(event.target.value);
+    currentPage = 1;
+    applyFilters();
+  });
+  [statusFilter, timeFilter, technicianFilter].forEach(control => {
+    control.addEventListener('change', () => {
+      activeFilter = statusFilter.value;
+      currentPage = 1;
       applyFilters();
     });
+  });
+
+  document.getElementById('exportJobsButton')?.addEventListener('click', () => {
+    const headings = ['Customer','Description','Type','Created','Status','Technician','Fee','Days','Promised'];
+    const csvRows = filteredRows.map(row => {
+      const description = row.querySelector('[data-field="description"]')?.textContent.trim() || '';
+      const type = [...row.children].filter(element => !element.classList.contains('bulk-check'))[4]?.textContent.trim() || '';
+      const created = [...row.children].filter(element => !element.classList.contains('bulk-check'))[5]?.textContent.trim() || '';
+      const technician = row.querySelector('[data-tech-cell]')?.textContent.trim() || '';
+      const fee = row.querySelector('[data-field="fee"]')?.textContent.trim() || '';
+      const cells = [...row.children].filter(element => !element.classList.contains('bulk-check'));
+      return [row.dataset.customer, description, type, created, row.dataset.stage, technician, fee, cells[9]?.textContent.trim() || '', row.dataset.promised || ''];
+    });
+    const escapeCsv = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
+    const csv = [headings, ...csvRows].map(values => values.map(escapeCsv).join(',')).join('\n');
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8' }));
+    link.download = 'jobline-filtered-jobs.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
   });
 
   const sortCellMap = { 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10 };
@@ -600,10 +725,11 @@ input{font-family:var(--font);}
         return (typeof av === 'number' ? av - bv : av.localeCompare(bv)) * sortState.direction;
       });
       const table = document.querySelector('.jq-table-wrap');
-      rows.forEach(row => table.appendChild(row));
+      rows.forEach(row => table.insertBefore(row, pagination));
       applyFilters();
     });
   });
+  applyFilters();
 
   function saveInlineValue(row, field, value) {
     const updates = readUpdates();
@@ -782,6 +908,9 @@ input{font-family:var(--font);}
     }
     const assignments = new Map(assignmentSelects.map(select => [select.dataset.jobKey, select.value]));
     const updates = readUpdates();
+    const scheduleDate = document.getElementById('bulkDate').value;
+    const selectedTime = document.getElementById('bulkTime').value;
+    const promisedShort = scheduleDate ? new Date(`${scheduleDate}T00:00:00`).toLocaleDateString('en-US', { month:'short', day:'numeric' }) : '';
     chosenRows.forEach(row => {
       const techCell = row.querySelector('[data-tech-cell]');
       const technicianName = assignments.get(row.dataset.jobKey);
@@ -792,10 +921,21 @@ input{font-family:var(--font);}
         row.dataset.stage = 'Scheduled';
         renderStage(row.querySelector('[data-field="stage"]'), 'Scheduled');
       }
-      updates[row.dataset.jobKey] = { ...(updates[row.dataset.jobKey] || {}), technician: technicianName, ...profile, ...(shouldSchedule ? { stage:'Scheduled' } : {}) };
+      const scheduleUpdates = {};
+      if (scheduleDate) {
+        scheduleUpdates.promised = scheduleDate;
+        scheduleUpdates.promisedShort = promisedShort;
+        row.dataset.promised = promisedShort;
+        const cells = [...row.children].filter(element => !element.classList.contains('bulk-check'));
+        cells[10].textContent = promisedShort;
+      }
+      if (selectedTime !== 'Keep existing time') scheduleUpdates.time = selectedTime;
+      updates[row.dataset.jobKey] = { ...(updates[row.dataset.jobKey] || {}), technician: technicianName, ...profile, ...scheduleUpdates, ...(shouldSchedule ? { stage:'Scheduled' } : {}) };
       row.dispatchEvent(new Event('change', { bubbles:true }));
     });
     writeUpdates(updates);
+    document.getElementById('bulkDate').value = '';
+    document.getElementById('bulkTime').value = 'Keep existing time';
     document.getElementById('bulkToastText').textContent = `${chosenRows.length} ${chosenRows.length === 1 ? 'job' : 'jobs'} assigned successfully`;
     finishBulkAssign();
     toast.classList.add('show');
@@ -812,10 +952,10 @@ input{font-family:var(--font);}
   }
 })();
 </script>
-<script src="persona.js?v=8"></script>
-<script src="ai-suggestions.js?v=12"></script>
-<script src="operations-overview.js?v=2"></script>
+<script src="persona.js?v=14"></script>
+<script src="ai-suggestions.js?v=20"></script>
+<script src="operations-overview.js?v=3"></script>
 <script src="accessibility.js?v=1"></script>
-<script src="app-shell.js?v=4"></script>
+<script src="app-shell.js?v=6"></script>
 </body>
 </html>
